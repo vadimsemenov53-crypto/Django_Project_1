@@ -77,3 +77,43 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ['name', 'price',]
+
+
+class ContactInfo(models.Model):
+    """ Модель для хранения контактных данных. """
+    first_name = models.CharField(
+        max_length=100,
+        verbose_name='Имя',
+        help_text='Введите имя'
+    )
+    last_name = models.CharField(
+        max_length=100,
+        verbose_name='Фамилия',
+        help_text='Введите фамилию'
+    )
+    phone = models.CharField(
+        max_length=100,
+        verbose_name='Телефон',
+        help_text='Введите номер телефона'
+    )
+    city = models.CharField(
+        verbose_name='Город',
+        help_text='Введите город',
+        blank=True,
+        null=True
+    )
+    address = models.CharField(
+        verbose_name='Адрес',
+        help_text='Введите адрес',
+        blank=True,
+        null=True
+    )
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
+    class Meta:
+        """ Метаданные модели Product"""
+        verbose_name = 'контакт'
+        verbose_name_plural = 'контакты'
+        ordering = ['first_name', 'last_name',]
