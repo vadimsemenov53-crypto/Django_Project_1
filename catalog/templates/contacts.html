@@ -56,8 +56,15 @@
                     <form method="post" action="" class="form-floating">
                         {% csrf_token %}
                         <div class="mb-3">
-                            <label for="name">Имя</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя"
+                            <label for="first_name">Имя</label>
+                            <input type="text" name="first_name" class="form-control" id="first_name"
+                                   placeholder="Ваше имя"
+                                   required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="last_name">Фамилия</label>
+                            <input type="text" name="last_name" class="form-control" id="last_name"
+                                   placeholder="Ваша фамилия"
                                    required>
                         </div>
                         <div class="mb-3">
@@ -66,12 +73,41 @@
                                    placeholder="Контактный телефон" required>
                         </div>
                         <div class="mb-3">
-                            <label for="message">Сообщение</label>
-                            <textarea type="text" name="message" class="form-control" id="message"
-                                      placeholder="Контактный телефон" required></textarea>
+                            <label for="city">Город</label>
+                            <input type="text" name="city" class="form-control" id="city"
+                                   placeholder="Ваш город" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address">Адрес</label>
+                            <input type="text" name="address" class="form-control" id="address"
+                                   placeholder="Ваш адрес" required>
                         </div>
                         <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
                     </form>
+
+                    <hr>
+
+                    <h3>Предоставленные контакты</h3>
+
+                    {% for contact in contacts %}
+
+                    <div class="card mt-3">
+                        <div class="card-body">
+
+                            <h5>
+                                {{ contact.first_name }}
+                                {{ contact.last_name }}
+                            </h5>
+
+                            <p>Телефон: {{ contact.phone }}</p>
+                            <p>Город: {{ contact.city }}</p>
+                            <p>Адрес: {{ contact.address }}</p>
+
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
                 </div>
             </div>
         </div>
