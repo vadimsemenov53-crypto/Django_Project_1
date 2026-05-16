@@ -1,7 +1,14 @@
 from django.shortcuts import render
+from catalog.models import Product
 
 def home(request):
     """ Контроллер для домашней страницы home.html """
+    last_product = Product.objects.order_by('-created_at')[:3]
+
+    print('Последние 3 товара:')
+    for product in last_product:
+        print(product.name)
+
     return render(request, 'home.html')
 
 
