@@ -97,12 +97,14 @@ class ContactInfo(models.Model):
         help_text='Введите номер телефона'
     )
     city = models.CharField(
+        max_length=200,
         verbose_name='Город',
         help_text='Введите город',
         blank=True,
         null=True
     )
     address = models.CharField(
+        max_length=255,
         verbose_name='Адрес',
         help_text='Введите адрес',
         blank=True,
