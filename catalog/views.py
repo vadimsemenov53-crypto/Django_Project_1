@@ -46,3 +46,18 @@ def product_detail(request, pk):
 
     return render(request, 'product_detail.html', context=context)
 
+
+def product_add(request):
+    """ Контроллер для станицы добавления нового товара. """
+    if request.method == 'POST':
+        Product.objects.create(
+            name=request.POST.get('name'),
+            description=request.POST.get('description'),
+            image=request.POST.get('image'),
+            category=request.POST.get('category'),
+            price=request.POST.get('address')
+        )
+        return redirect('catalog:product_add')
+
+    return render(request,'product_add.html',)
+
