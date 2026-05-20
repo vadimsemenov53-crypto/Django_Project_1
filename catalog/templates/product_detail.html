@@ -4,20 +4,26 @@
 
 <div class="container">
     <div class="card mb-3" style="max-width: 540px;">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img class="img-thumbnail" src="{{ product.image | media_filter }}">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img class="img-thumbnail" src="{{ product.image | media_filter }}">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Модель: {{ product.name }}</h5>
+                    <h5 class="card-title">Цена: {{ product.price }} руб.</h5>
+                    <p class="card-text"><small class="text-body-secondary">О товаре:</small></p>
+                    <p class="card-text">{{ product.description }}</p>
+                    <p class="card-text">
+                        <small class="text-body-secondary">
+                            Актуально от: {{ product.updated_at }}
+                        </small></p>
+                    <nav class="ms-5">
+                        <a class="p-2 btn btn-outline-primary" href="/contacts/">Оформить заказ</a>
+                    </nav>
+                </div>
+            </div>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">Модель: {{ product.name }}</h5>
-            <h5 class="card-title">Цена: {{ product.price }} руб.</h5>
-            <p class="card-text"><small class="text-body-secondary">О товаре:</small></p>
-            <p class="card-text">{{ product.description }}</p>
-            <p class="card-text"><small class="text-body-secondary">Актуально от: {{ product.updated_at }}</small></p>
-          </div>
-        </div>
-      </div>
     </div>
 </div>
 {% endblock %}
