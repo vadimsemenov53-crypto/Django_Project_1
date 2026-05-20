@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from catalog.models import Product, ContactInfo
 
 def home(request):
@@ -32,3 +32,12 @@ def contacts(request):
         'contacts.html',
         {'contacts': contacts_all
          })
+
+
+def product_detail(request, pk):
+    """ Контроллер для детального отображения товара product_detail.html. """
+    product = get_object_or_404(Product, pk=pk)
+    context = {'product': product,}
+
+    return render(request, 'product_detail.html', context=context)
+
