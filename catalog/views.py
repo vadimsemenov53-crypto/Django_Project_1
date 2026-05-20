@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from catalog.models import Product, ContactInfo
+from catalog.models import Product, ContactInfo, Category
 
 def home(request):
     """ Контроллер для домашней страницы home.html """
@@ -49,15 +49,23 @@ def product_detail(request, pk):
 
 def product_add(request):
     """ Контроллер для станицы добавления нового товара. """
+    category = Category.objects.all()
+    context = {
+        'category': category,
+    }
+
     if request.method == 'POST':
+        category_id = request.POST.get('category')
+        category_obj = Category.objects.get(pk=category_id)
+
         Product.objects.create(
             name=request.POST.get('name'),
             description=request.POST.get('description'),
-            image=request.POST.get('image'),
-            category=request.POST.get('category'),
-            price=request.POST.get('address')
+            image=request.FILES.get('image'),
+            category=category_obj,
+            price=request.POST.get('price')
         )
-        return redirect('catalog:product_add')
+        return redirect('catalog:home')
 
-    return render(request,'product_add.html',)
+    return render(request,'product_add.html', context=context)
 
