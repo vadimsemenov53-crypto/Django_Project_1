@@ -13,8 +13,8 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('Все данные удалены!'))
 
         try:
-            call_command('loaddata', 'fixture_category.json')
-            call_command('loaddata', 'fixture_product.json')
+            call_command('loaddata', 'fixture_category_1.json')
+            call_command('loaddata', 'fixture_product_1.json')
 
             self.stdout.write(self.style.SUCCESS('Фикстуры загружены!'))
 
