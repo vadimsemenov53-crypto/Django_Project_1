@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from catalog.models import Product, ContactInfo, Category
+from django.core.paginator import Paginator
 
 def home(request):
     """ Контроллер для домашней страницы home.html """
@@ -10,6 +11,11 @@ def home(request):
         print(product.name)
 
     products = Product.objects.all()
+    paginator = Paginator(products, 3)
+
+    page_number = request.GET.get('page')
+    products = paginator.get_page(page_number)
+
     context = {
         'products': products,
     }
