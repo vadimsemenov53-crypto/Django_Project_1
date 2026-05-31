@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from catalog.models import Product, ContactInfo, Category
 from django.core.paginator import Paginator
 
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView
 from django.views.generic import ListView, DetailView
+from django.views import View
 from django.urls import reverse_lazy
 
 class HomeListView(ListView):
@@ -26,10 +27,14 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
 
-def contacts(request):
-    """ Контроллер для страницы contacts.html """
+class ContactView(View):
 
-    if request.method == 'POST':
+    def get(self, request):
+        contacts_all = ContactInfo.objects.all()
+
+        return render(request,'contacts.html',{'contacts': contacts_all})
+
+    def post(self, request):
         ContactInfo.objects.create(
             first_name=request.POST.get('first_name'),
             last_name=request.POST.get('last_name'),
@@ -38,12 +43,3 @@ def contacts(request):
             address=request.POST.get('address')
         )
         return redirect('catalog:contacts')
-
-    contacts_all = ContactInfo.objects.all()
-
-    return render(
-        request,
-        'contacts.html',
-        {'contacts': contacts_all
-         })
-
