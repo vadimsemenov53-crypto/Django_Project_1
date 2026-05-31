@@ -4,12 +4,20 @@ from django.core.paginator import Paginator
 
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
 
 class HomeListView(ListView):
     model = Product
     template_name = 'home.html'
     context_object_name = 'products'
     paginate_by = 3
+
+
+class ProductAddCreateView(CreateView):
+    model = Product
+    fields = ['name', 'description', 'image', 'category', 'price']
+    template_name = 'product_add.html'
+    success_url = reverse_lazy('catalog:home')
 
 
 def contacts(request):
@@ -42,25 +50,25 @@ def product_detail(request, pk):
     return render(request, 'product_detail.html', context=context)
 
 
-def product_add(request):
-    """ Контроллер для станицы добавления нового товара. """
-    category = Category.objects.all()
-    context = {
-        'category': category,
-    }
-
-    if request.method == 'POST':
-        category_id = request.POST.get('category')
-        category_obj = Category.objects.get(pk=category_id)
-
-        Product.objects.create(
-            name=request.POST.get('name'),
-            description=request.POST.get('description'),
-            image=request.FILES.get('image'),
-            category=category_obj,
-            price=request.POST.get('price')
-        )
-        return redirect('catalog:home')
-
-    return render(request,'product_add.html', context=context)
+# def product_add(request):
+#     """ Контроллер для станицы добавления нового товара. """
+#     category = Category.objects.all()
+#     context = {
+#         'category': category,
+#     }
+#
+#     if request.method == 'POST':
+#         category_id = request.POST.get('category')
+#         category_obj = Category.objects.get(pk=category_id)
+#
+#         Product.objects.create(
+#             name=request.POST.get('name'),
+#             description=request.POST.get('description'),
+#             image=request.FILES.get('image'),
+#             category=category_obj,
+#             price=request.POST.get('price')
+#         )
+#         return redirect('catalog:home')
+#
+#     return render(request,'product_add.html', context=context)
 
