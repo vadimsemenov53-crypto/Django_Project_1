@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from catalog.models import Product, ContactInfo, Category
-from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
+from catalog.models import Product, ContactInfo
 
 from django.views.generic.edit import CreateView
 from django.views.generic import ListView, DetailView
