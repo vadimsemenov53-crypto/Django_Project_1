@@ -2,25 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from catalog.models import Product, ContactInfo, Category
 from django.core.paginator import Paginator
 
-def home(request):
-    """ Контроллер для домашней страницы home.html """
-    last_product = Product.objects.order_by('-created_at')[:3]
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic import ListView, DetailView
 
-    print('Последние 3 товара:')
-    for product in last_product:
-        print(product.name)
-
-    products = Product.objects.all()
-    paginator = Paginator(products, 3)
-
-    page_number = request.GET.get('page')
-    products = paginator.get_page(page_number)
-
-    context = {
-        'products': products,
-    }
-
-    return render(request, 'home.html', context=context)
+class HomeListView(ListView):
+    model = Product
+    template_name = 'home.html'
+    context_object_name = 'products'
+    paginate_by = 3
 
 
 def contacts(request):
