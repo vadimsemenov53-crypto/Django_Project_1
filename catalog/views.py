@@ -20,6 +20,12 @@ class ProductAddCreateView(CreateView):
     success_url = reverse_lazy('catalog:home')
 
 
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
+    context_object_name = 'product'
+
+
 def contacts(request):
     """ Контроллер для страницы contacts.html """
 
@@ -40,35 +46,4 @@ def contacts(request):
         'contacts.html',
         {'contacts': contacts_all
          })
-
-
-def product_detail(request, pk):
-    """ Контроллер для детального отображения товара product_detail.html. """
-    product = get_object_or_404(Product, pk=pk)
-    context = {'product': product,}
-
-    return render(request, 'product_detail.html', context=context)
-
-
-# def product_add(request):
-#     """ Контроллер для станицы добавления нового товара. """
-#     category = Category.objects.all()
-#     context = {
-#         'category': category,
-#     }
-#
-#     if request.method == 'POST':
-#         category_id = request.POST.get('category')
-#         category_obj = Category.objects.get(pk=category_id)
-#
-#         Product.objects.create(
-#             name=request.POST.get('name'),
-#             description=request.POST.get('description'),
-#             image=request.FILES.get('image'),
-#             category=category_obj,
-#             price=request.POST.get('price')
-#         )
-#         return redirect('catalog:home')
-#
-#     return render(request,'product_add.html', context=context)
 
