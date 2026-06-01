@@ -14,9 +14,10 @@
                     <div class="card-body">
                         <p class="card-text">{{ post.title }}</p>
                         <p class="card-text">{{ post.content | truncatechars:100 }}</p>
+                        <p class="card-text">Количество просмотров: {{ post.views_count }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a class="btn btn-primary" href="#" role="button">
+                                <a class="btn btn-primary" href="{% url 'blogs:blog_detail' post.pk %}" role="button">
                                     Посмотреть
                                 </a>
                                 <a class="btn btn-secondary" href="{% url 'blogs:blog_create' %}" role="button">

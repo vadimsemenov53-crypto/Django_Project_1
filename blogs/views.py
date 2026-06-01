@@ -13,3 +13,23 @@ class BlogCreateView(CreateView):
     model = BlogPost
     fields = ('title', 'content', 'image',)
     success_url = reverse_lazy('blogs:blog_list')
+
+
+class BlogDetailView(DetailView):
+    model = BlogPost
+    success_url = reverse_lazy('blogs:blog_list')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        self.object.save()
+        return self.object
+
+
+# class BlogUpdateView(UpdateView):
+#     model = Dog
+#     fields = ('name', 'breed', 'photo', 'date_born',)
+#     success_url = reverse_lazy('blogs:blog_list')
+#
+#     def get_success_url(self):
+#         return reverse('blogs:blog_list', args=[self.kwargs.get('pk')])
