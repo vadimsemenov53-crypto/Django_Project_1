@@ -8,6 +8,9 @@ from django.urls import reverse_lazy, reverse
 class BlogListView(ListView):
     model = BlogPost
 
+    def get_queryset(self):
+        return BlogPost.objects.filter(is_published=True)
+
 
 class BlogCreateView(CreateView):
     model = BlogPost
