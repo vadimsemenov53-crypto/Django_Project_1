@@ -7,4 +7,3 @@ from django.urls import reverse_lazy, reverse
 
 class BlogListView(ListView):
     model = BlogPost
-    template_name = 'base_blog.html'
