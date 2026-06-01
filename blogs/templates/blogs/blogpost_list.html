@@ -23,7 +23,7 @@
                                 <a class="btn btn-secondary" href="{% url 'blogs:blog_update' post.pk %}" role="button">
                                     Редактировать
                                 </a>
-                                <a class="btn btn-danger" href="#" role="button">Удалить</a>
+                                <a class="btn btn-danger" href="{% url 'blogs:blog_delete' post.pk %}" role="button">Удалить</a>
                             </div>
                         </div>
                     </div>
