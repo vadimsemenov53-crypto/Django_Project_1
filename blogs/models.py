@@ -28,7 +28,8 @@ class BlogPost(models.Model):
     )
 
     created_at = models.DateTimeField(
-        auto_now_add=True
+        auto_now_add=True,
+        verbose_name='Дата публикации'
     )
 
     is_published = models.BooleanField(
