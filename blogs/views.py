@@ -1,6 +1,14 @@
+import os
+
+import django.conf
+from django.conf import settings
+
 from blogs.models import BlogPost
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
+
+from django.core.mail import send_mail
+
 
 # Create your views here.
 
@@ -26,6 +34,19 @@ class BlogDetailView(DetailView):
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
+
+        if self.object.views_count == 100:
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [os.getenv("EMAIL_TO")]
+
+            send_mail(
+                "Ваш Блог",
+                "Поздравляем! Вау, ваш пост набрал 100 просмотров.",
+                from_email,
+                to_email,
+                fail_silently=False,
+            )
+
         return self.object
 
 
