@@ -26,10 +26,10 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-# class BlogUpdateView(UpdateView):
-#     model = Dog
-#     fields = ('name', 'breed', 'photo', 'date_born',)
-#     success_url = reverse_lazy('blogs:blog_list')
-#
-#     def get_success_url(self):
-#         return reverse('blogs:blog_list', args=[self.kwargs.get('pk')])
+class BlogUpdateView(UpdateView):
+    model = BlogPost
+    fields = ('title', 'content', 'image',)
+    success_url = reverse_lazy('blogs:blog_list')
+
+    def get_success_url(self):
+        return reverse('blogs:blog_detail', args=[self.kwargs.get('pk')])
