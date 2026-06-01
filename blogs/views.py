@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from blogs.models import BlogPost
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
@@ -7,6 +6,7 @@ from django.urls import reverse_lazy, reverse
 
 class BlogListView(ListView):
     model = BlogPost
+    paginate_by = 3
 
     def get_queryset(self):
         return BlogPost.objects.filter(is_published=True)
