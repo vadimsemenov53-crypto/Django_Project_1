@@ -36,6 +36,12 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
 
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'product_confirm_delete.html'
+    success_url = reverse_lazy('catalog:home')
+
+
 class ContactView(View):
 
     def get(self, request):

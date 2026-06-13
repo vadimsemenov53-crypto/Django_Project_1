@@ -25,7 +25,7 @@
                         <a class="btn btn-outline-secondary" href="{% url 'catalog:product_update' product.pk %}" role="button">
                             Редактировать
                         </a>
-                        <a class="btn btn-outline-danger" href="#" role="button">Удалить</a>
+                        <a class="btn btn-outline-danger" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
                     </div>
                 </div>
             </div>
