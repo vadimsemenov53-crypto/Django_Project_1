@@ -10,7 +10,7 @@ class ProductForm(forms.ModelForm):
         fields = ['name', 'description', 'image', 'category', 'price']
 
     def clean_name(self):
-        name = self.cleaned_data.get('name', '')
+        name = self.cleaned_data.get('name')
 
         for word in INVALID_WORDS:
             if word in name.lower():
@@ -26,3 +26,11 @@ class ProductForm(forms.ModelForm):
                 raise ValidationError('В описании продукта используются запрещенные слова.')
 
         return description
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+
+        if price < 0:
+            raise ValidationError('Цена не может быть отрицательной')
+
+        return price
