@@ -1,7 +1,10 @@
+from time import sleep
+
 from django import forms
 from django.core.exceptions import ValidationError
 from .models import Product
-from .validators import INVALID_WORDS
+from .validators import INVALID_WORDS, VALID_FORMAT_IMAGE, MAX_SIZE_IMAGE
+from PIL import Image
 
 class StyleFromMixin:
     def __init__(self, *args, **kwargs):
@@ -41,6 +44,24 @@ class ProductForm(StyleFromMixin, forms.ModelForm):
         price = self.cleaned_data.get('price')
 
         if price < 0:
-            raise ValidationError('Цена не может быть отрицательной')
+            raise ValidationError('Цена не может быть отрицательной.')
 
         return price
+
+    def clean_image(self):
+        image = self.cleaned_data.get('image', '')
+
+        if image:
+            if image.size > MAX_SIZE_IMAGE:
+                raise ValidationError('Размер изображение не должен превышать 5 Мб.')
+
+            try:
+                img = Image.open(image)
+                img.verify()
+                if img.format not in VALID_FORMAT_IMAGE:
+                    raise ValidationError('Неподдерживаемый формат изображения. Разрешены только: JPEG, PNG.')
+
+            except IOError:
+                raise ValidationError('Данный файл не является изображение')
+
+        return image

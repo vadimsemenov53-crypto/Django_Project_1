@@ -9,3 +9,10 @@ INVALID_WORDS = [
     'полиция',
     'радар'
 ]
+
+VALID_FORMAT_IMAGE = [
+    "JPEG",
+    "PNG"
+]
+
+MAX_SIZE_IMAGE = 5 * 1024 * 1024 # максимальный размер изображение 5 Мб
