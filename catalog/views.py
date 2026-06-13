@@ -1,32 +1,39 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from catalog.models import Product, ContactInfo, Category
-from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
+from catalog.models import Product, ContactInfo
 
-def home(request):
-    """ Контроллер для домашней страницы home.html """
-    last_product = Product.objects.order_by('-created_at')[:3]
+from django.views.generic.edit import CreateView
+from django.views.generic import ListView, DetailView
+from django.views import View
+from django.urls import reverse_lazy
 
-    print('Последние 3 товара:')
-    for product in last_product:
-        print(product.name)
-
-    products = Product.objects.all()
-    paginator = Paginator(products, 3)
-
-    page_number = request.GET.get('page')
-    products = paginator.get_page(page_number)
-
-    context = {
-        'products': products,
-    }
-
-    return render(request, 'home.html', context=context)
+class HomeListView(ListView):
+    model = Product
+    template_name = 'home.html'
+    context_object_name = 'products'
+    paginate_by = 3
 
 
-def contacts(request):
-    """ Контроллер для страницы contacts.html """
+class ProductAddCreateView(CreateView):
+    model = Product
+    fields = ['name', 'description', 'image', 'category', 'price']
+    template_name = 'product_add.html'
+    success_url = reverse_lazy('catalog:home')
 
-    if request.method == 'POST':
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
+    context_object_name = 'product'
+
+
+class ContactView(View):
+
+    def get(self, request):
+        contacts_all = ContactInfo.objects.all()
+
+        return render(request,'contacts.html',{'contacts': contacts_all})
+
+    def post(self, request):
         ContactInfo.objects.create(
             first_name=request.POST.get('first_name'),
             last_name=request.POST.get('last_name'),
@@ -35,43 +42,3 @@ def contacts(request):
             address=request.POST.get('address')
         )
         return redirect('catalog:contacts')
-
-    contacts_all = ContactInfo.objects.all()
-
-    return render(
-        request,
-        'contacts.html',
-        {'contacts': contacts_all
-         })
-
-
-def product_detail(request, pk):
-    """ Контроллер для детального отображения товара product_detail.html. """
-    product = get_object_or_404(Product, pk=pk)
-    context = {'product': product,}
-
-    return render(request, 'product_detail.html', context=context)
-
-
-def product_add(request):
-    """ Контроллер для станицы добавления нового товара. """
-    category = Category.objects.all()
-    context = {
-        'category': category,
-    }
-
-    if request.method == 'POST':
-        category_id = request.POST.get('category')
-        category_obj = Category.objects.get(pk=category_id)
-
-        Product.objects.create(
-            name=request.POST.get('name'),
-            description=request.POST.get('description'),
-            image=request.FILES.get('image'),
-            category=category_obj,
-            price=request.POST.get('price')
-        )
-        return redirect('catalog:home')
-
-    return render(request,'product_add.html', context=context)
-
