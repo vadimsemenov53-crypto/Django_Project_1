@@ -3,8 +3,18 @@ from django.core.exceptions import ValidationError
 from .models import Product
 from .validators import INVALID_WORDS
 
+class StyleFromMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
-class ProductForm(forms.ModelForm):
+        for field_name, field in self.fields.items():
+            if isinstance(field, forms.BooleanField):
+                field.widget.attrs['class'] = 'form-check-input'
+            else:
+                field.widget.attrs['class'] = 'form-control'
+
+
+class ProductForm(StyleFromMixin, forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'description', 'image', 'category', 'price']
