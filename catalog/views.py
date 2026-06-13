@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from catalog.models import Product, ContactInfo
 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic import ListView, DetailView
 from django.views import View
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 class HomeListView(ListView):
     model = Product
@@ -18,6 +18,16 @@ class ProductAddCreateView(CreateView):
     fields = ['name', 'description', 'image', 'category', 'price']
     template_name = 'product_add.html'
     success_url = reverse_lazy('catalog:home')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ['name', 'description', 'image', 'category', 'price']
+    template_name = 'product_add.html'
+    success_url = reverse_lazy('catalog:home')
+
+    def get_success_url(self):
+        return reverse('catalog:product_detail', args=[self.kwargs.get('pk')])
 
 
 class ProductDetailView(DetailView):
