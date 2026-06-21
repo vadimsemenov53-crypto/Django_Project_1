@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'catalog',
     'blogs',
     'users',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

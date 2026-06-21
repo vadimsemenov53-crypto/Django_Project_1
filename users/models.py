@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from phonenumber_field.modelfields import PhoneNumberField
 
 class User(AbstractUser):
     username = None
@@ -11,8 +12,7 @@ class User(AbstractUser):
         help_text='Загрузите фото для автара'
     )
 
-    phone = models.CharField(
-        max_length=15,
+    phone = PhoneNumberField(
         verbose_name='Телефон',
         blank=True, null=True,
         help_text='Введите номер телефона.'
