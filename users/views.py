@@ -27,7 +27,7 @@ class UserCreateView(CreateView):
         url = f'http://{host}/users/email-confirm/{token}/'
 
         send_mail(
-            subject='VADIM PRO Подтверждение почты',
+            subject='SKYSTORE Подтверждение почты',
             message=f'Привет перейди по ссылке для подтверждения почты: {url}',
             from_email=EMAIL_HOST_USER,
             recipient_list=[user.email]
