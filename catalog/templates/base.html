@@ -12,17 +12,32 @@
     <h5 class="my-0 mx-2 mr-md-auto font-weight-normal">Skystore</h5>
 
     <nav>
-        <a class="p-2 btn btn-outline-primary" href="/catalog/home/">Каталог</a>
-        <a class="p-2 btn btn-outline-primary" href="/catalog/contacts/">Контакты</a>
-        <a class="p-2 btn btn-outline-primary" href="/catalog/product_add/">Добавить товар</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:home' %}">Каталог</a>
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:contacts' %}">Контакты</a>
+        {% if user.is_authenticated %}
+        <a class="p-2 btn btn-outline-primary" href="{% url 'catalog:product_add' %}">Добавить товар</a>
+        {% endif %}
     </nav>
 
     <nav class="ms-auto">
         {% if user.is_authenticated %}
-        <form method="post" action="{% url 'users:logout' %}" style="display: inline">
-            {% csrf_token %}
-            <button type="submit" class="p-2 btn btn-outline-primary">Выйти</button>
-        </form>
+        <div class="p-2 btn btn-outline-primary dropdown">
+            <p class="dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user.email }}
+            </p>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'users:detail' %}">Профиль</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li>
+                    <form method="post" action="{% url 'users:logout' %}" style="display: inline">
+                        {% csrf_token %}
+                        <button type="submit" class="dropdown-item btn-outline-primary">Выйти</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
 
         {% else %}
         <a href="{% url 'users:login' %}" class="p-2 btn btn-outline-primary">Вход</a>
