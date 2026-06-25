@@ -9,11 +9,26 @@
 </head>
 <body>
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
-    <nav class="ms-5">
+    <h5 class="my-0 mx-2 mr-md-auto font-weight-normal">Skystore</h5>
+
+    <nav>
         <a class="p-2 btn btn-outline-primary" href="/catalog/home/">Каталог</a>
         <a class="p-2 btn btn-outline-primary" href="/catalog/contacts/">Контакты</a>
         <a class="p-2 btn btn-outline-primary" href="/catalog/product_add/">Добавить товар</a>
+    </nav>
+
+    <nav class="ms-auto">
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'users:logout' %}" style="display: inline">
+            {% csrf_token %}
+            <button type="submit" class="p-2 btn btn-outline-primary">Выйти</button>
+        </form>
+
+        {% else %}
+        <a href="{% url 'users:login' %}" class="p-2 btn btn-outline-primary">Вход</a>
+        <a href="{% url 'users:register' %}" class="p-2 btn btn-outline-primary">Зарегистрироваться</a></li>
+
+        {% endif %}
     </nav>
 </div>
 
