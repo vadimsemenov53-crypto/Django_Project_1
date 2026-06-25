@@ -8,6 +8,8 @@ from django.urls import reverse_lazy, reverse
 
 from .forms import ProductForm
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 class HomeListView(ListView):
     model = Product
     template_name = 'home.html'
@@ -15,14 +17,14 @@ class HomeListView(ListView):
     paginate_by = 3
 
 
-class ProductAddCreateView(CreateView):
+class ProductAddCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     template_name = 'product_add.html'
     success_url = reverse_lazy('catalog:home')
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     template_name = 'product_add.html'
@@ -38,7 +40,7 @@ class ProductDetailView(DetailView):
     context_object_name = 'product'
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     template_name = 'product_confirm_delete.html'
     success_url = reverse_lazy('catalog:home')
