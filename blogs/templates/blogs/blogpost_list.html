@@ -20,10 +20,17 @@
                                 <a class="btn btn-primary" href="{% url 'blogs:blog_detail' post.pk %}" role="button">
                                     Посмотреть
                                 </a>
+
+                                {% if perms.blogs.change_blogpost %}
                                 <a class="btn btn-secondary" href="{% url 'blogs:blog_update' post.pk %}" role="button">
                                     Редактировать
                                 </a>
+                                {% endif %}
+
+                                {% if perms.blogs.delete_blogpost %}
                                 <a class="btn btn-danger" href="{% url 'blogs:blog_delete' post.pk %}" role="button">Удалить</a>
+                                {% endif %}
+
                             </div>
                         </div>
                     </div>

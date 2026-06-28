@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy, reverse
 
 from django.core.mail import send_mail
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 # Create your views here.
@@ -20,10 +21,12 @@ class BlogListView(ListView):
         return BlogPost.objects.filter(is_published=True)
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = BlogPost
     fields = ('title', 'content', 'image',)
     success_url = reverse_lazy('blogs:blog_list')
+    permission_required = 'blogs.add_blogpost'
+    raise_exception = True
 
 
 class BlogDetailView(DetailView):
@@ -50,15 +53,19 @@ class BlogDetailView(DetailView):
         return self.object
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = BlogPost
     fields = ('title', 'content', 'image',)
     success_url = reverse_lazy('blogs:blog_list')
+    permission_required = 'blogs.change_blogpost'
+    raise_exception = True
 
     def get_success_url(self):
         return reverse('blogs:blog_detail', args=[self.kwargs.get('pk')])
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = BlogPost
     success_url = reverse_lazy('blogs:blog_list')
+    permission_required = 'blogs.delete_blogpost'
+    raise_exception = True

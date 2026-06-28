@@ -21,7 +21,7 @@
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <form method="post" action="{% url 'users:login' %}?next={{ request.path }}" style="display: inline">
+                                    <form method="post" action="{% url 'users:logout' %}" style="display: inline">
                                         {% csrf_token %}
                                         <button type="submit" class="dropdown-item btn-outline-primary">Выйти</button>
                                     </form>
@@ -54,5 +54,7 @@
                     class="navbar-toggler-icon">
             </span>
         </button>
+
+        <a href="{% url 'catalog:home' %}" class="btn btn-primary">SkyStore</a></li>
     </div>
 </div>
