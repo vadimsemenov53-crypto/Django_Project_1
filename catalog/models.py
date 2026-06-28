@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from users.models import User
 
 # Create your models here.
 
@@ -72,6 +73,13 @@ class Product(models.Model):
         auto_now= True
     )
     is_active = models.BooleanField(verbose_name='Опубликовано', blank=True, null=True, default=False)
+    owner = models.ForeignKey(
+        User,
+        verbose_name='Владелец',
+        help_text='Укажите владельца продукта',
+        blank=True, null=True,
+        on_delete=models.SET_NULL
+    )
 
     def __str__(self):
         """ Метод стокового представления модели """
