@@ -6,7 +6,7 @@ from django.contrib.auth.views import LogoutView
 app_name = UsersConfig.name
 
 urlpatterns = [
-    path('login/', UserLoginView.as_view(next_page='catalog:home'), name='login'),
+    path('login/', UserLoginView.as_view(next_page='users:detail'), name='login'),
     path('logout/', LogoutView.as_view(next_page='catalog:home'), name='logout'),
     path('register/', UserCreateView.as_view(), name='register'),
     path('email-confirm/<str:token>/', email_verification, name='email-confirm'),
