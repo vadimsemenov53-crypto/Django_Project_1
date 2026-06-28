@@ -71,6 +71,7 @@ class Product(models.Model):
     updated_at = models.DateField(
         auto_now= True
     )
+    is_active = models.BooleanField(verbose_name='Статус публикации', blank=True, null=True, default=False)
 
     def __str__(self):
         """ Метод стокового представления модели """
@@ -81,6 +82,10 @@ class Product(models.Model):
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
         ordering = ['name', 'price',]
+        permissions = [
+            ('can_unpublish_product', 'Can unpublish product'),
+            ('can_delete_product', 'Can delete product'),
+        ]
 
 
 class ContactInfo(models.Model):
