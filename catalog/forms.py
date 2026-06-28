@@ -12,7 +12,7 @@ class StyleFromMixin:
 
         for field_name, field in self.fields.items():
             if isinstance(field, forms.BooleanField):
-                field.widget.attrs['class'] = 'form-check-input'
+                field.widget.attrs['class'] = 'form-switch'
             else:
                 field.widget.attrs['class'] = 'form-control'
 
@@ -20,7 +20,7 @@ class StyleFromMixin:
 class ProductForm(StyleFromMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'image', 'category', 'price']
+        fields = ['name', 'description', 'image', 'category', 'price', 'is_active']
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
