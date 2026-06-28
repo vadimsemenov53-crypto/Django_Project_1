@@ -71,7 +71,7 @@ class Product(models.Model):
     updated_at = models.DateField(
         auto_now= True
     )
-    is_active = models.BooleanField(verbose_name='Статус публикации', blank=True, null=True, default=False)
+    is_active = models.BooleanField(verbose_name='Опубликовано', blank=True, null=True, default=False)
 
     def __str__(self):
         """ Метод стокового представления модели """

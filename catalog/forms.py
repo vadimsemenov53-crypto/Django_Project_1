@@ -20,7 +20,7 @@ class StyleFromMixin:
 class ProductForm(StyleFromMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'description', 'image', 'category', 'price', 'is_active']
+        fields = ['name', 'description', 'image', 'category', 'price']
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
@@ -65,3 +65,9 @@ class ProductForm(StyleFromMixin, forms.ModelForm):
                 raise ValidationError('Данный файл не является изображение')
 
         return image
+
+
+class ProductModeratorForm(StyleFromMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['description', 'price', 'is_active']

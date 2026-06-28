@@ -6,9 +6,10 @@ from django.views.generic import ListView, DetailView
 from django.views import View
 from django.urls import reverse_lazy, reverse
 
-from .forms import ProductForm
+from .forms import ProductForm, ProductModeratorForm
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 class HomeListView(ListView):
     model = Product
@@ -32,6 +33,17 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse('catalog:product_detail', args=[self.kwargs.get('pk')])
+
+    def get_form_class(self):
+        user = self.request.user
+
+        if user.has_perm('catalog.can_unpublish_product'):
+            return ProductModeratorForm
+
+        if user.is_authenticated:
+            return ProductForm
+
+        raise PermissionDenied
 
 
 class ProductDetailView(DetailView):
