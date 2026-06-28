@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     'catalog',
     'blogs',
+    'users',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [
@@ -142,3 +144,5 @@ EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+AUTH_USER_MODEL = 'users.User'
