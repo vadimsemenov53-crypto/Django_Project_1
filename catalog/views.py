@@ -48,7 +48,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         if user.has_perm('catalog.can_unpublish_product'):
             return ProductModeratorForm
 
-        if user.is_authenticated:
+        if user == self.object.owner:
             return ProductForm
 
         raise PermissionDenied

@@ -28,7 +28,7 @@
                             Редактировать
                         </a>
 
-                        {% if perms.catalog.can_delete_product %}
+                        {% if perms.catalog.can_delete_product or user == product.owner %}
                         <a class="btn btn-outline-danger" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
                         {% endif %}
                     </div>
