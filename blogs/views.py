@@ -9,6 +9,7 @@ from django.urls import reverse_lazy, reverse
 
 from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from .forms import BlogPostForm
 
 
 # Create your views here.
@@ -23,7 +24,7 @@ class BlogListView(ListView):
 
 class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = BlogPost
-    fields = ('title', 'content', 'image',)
+    form_class = BlogPostForm
     success_url = reverse_lazy('blogs:blog_list')
     permission_required = 'blogs.add_blogpost'
     raise_exception = True
@@ -55,7 +56,7 @@ class BlogDetailView(DetailView):
 
 class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = BlogPost
-    fields = ('title', 'content', 'image',)
+    form_class = BlogPostForm
     success_url = reverse_lazy('blogs:blog_list')
     permission_required = 'blogs.change_blogpost'
     raise_exception = True
