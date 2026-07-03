@@ -24,10 +24,13 @@ class ProductService:
     @staticmethod
     def get_products_by_category_cache(category_id):
         """ Метод для получения продуктов по категориям используя кеш. """
-        products = ProductService.get_products_from_cache()
-        category_products = products.filter(category=category_id)
+        key = f'category_{category_id}'
+        products = cache.get(key)
 
-        if not category_products.exists():
-            return None
+        if products is not None:
+            return products
 
-        return category_products
+        products = Product.objects.filter(category_id=category_id)
+        cache.set(key, products, 60 * 15)
+
+        return products
