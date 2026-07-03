@@ -146,3 +146,12 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 AUTH_USER_MODEL = 'users.User'
+
+CACHE_ENABLE = True
+if CACHE_ENABLE:
+    CACHES = {
+        'default' : {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': os.getenv('LOCATION'),
+        }
+    }
