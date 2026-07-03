@@ -17,7 +17,7 @@ class ProductService:
             return products
 
         products = Product.objects.all()
-        cache.set(key, products)
+        cache.set(key, products, 60 * 15)
 
         return products
 

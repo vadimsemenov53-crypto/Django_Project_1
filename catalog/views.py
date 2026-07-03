@@ -1,8 +1,10 @@
+from itertools import product
+
 from django.shortcuts import render, redirect
 from catalog.models import Product, ContactInfo
 
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from django.views import View
 from django.urls import reverse_lazy, reverse
 
@@ -14,11 +16,26 @@ from django.core.exceptions import PermissionDenied
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
+from catalog.services import ProductService
+
 class HomeListView(ListView):
     model = Product
     template_name = 'home.html'
     context_object_name = 'products'
     paginate_by = 3
+
+    def get_queryset(self):
+        return ProductService.get_products_from_cache()
+
+
+class ProductCategoryView(View):
+
+    def get(self, request, category_id):
+        products = ProductService.get_products_by_category_cache(category_id)
+
+        return render(request, 'category_products.html', {'products': products})
+
+
 
 
 class ProductAddCreateView(LoginRequiredMixin, CreateView):
