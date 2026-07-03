@@ -12,7 +12,7 @@ class StyleFromMixin:
 
         for field_name, field in self.fields.items():
             if isinstance(field, forms.BooleanField):
-                field.widget.attrs['class'] = 'form-check-input'
+                field.widget.attrs['class'] = 'form-switch'
             else:
                 field.widget.attrs['class'] = 'form-control'
 
@@ -65,3 +65,9 @@ class ProductForm(StyleFromMixin, forms.ModelForm):
                 raise ValidationError('Данный файл не является изображение')
 
         return image
+
+
+class ProductModeratorForm(StyleFromMixin, forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['description', 'price', 'is_active']

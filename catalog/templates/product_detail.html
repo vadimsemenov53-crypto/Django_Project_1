@@ -24,10 +24,13 @@
 
                     {% if user.is_authenticated %}
                     <div class="btn-group mt-3">
+
+                        {% if perms.catalog.can_delete_product or user == product.owner %}
                         <a class="btn btn-outline-secondary" href="{% url 'catalog:product_update' product.pk %}" role="button">
                             Редактировать
                         </a>
                         <a class="btn btn-outline-danger" href="{% url 'catalog:product_delete' product.pk %}" role="button">Удалить</a>
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>
