@@ -11,6 +11,9 @@ from .forms import ProductForm, ProductModeratorForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
 class HomeListView(ListView):
     model = Product
     template_name = 'home.html'
@@ -54,6 +57,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         raise PermissionDenied
 
 
+@method_decorator(cache_page(60), name='dispatch')
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'product_detail.html'
